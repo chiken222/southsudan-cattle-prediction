@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — South Sudan Cattle Movement Forecast</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="about-page">
+  <div class="about-content">
+    <h1>About the South Sudan Cattle Movement Forecast</h1>
+    <p>This system predicts where cattle are likely to be in South Sudan, updated hourly. It is intended for humanitarian and planning use (e.g. UN/NGOs).</p>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This is a <strong>probabilistic forecast</strong>, not ground truth. We never claim “cattle are here”; we show likelihood (e.g. 73% probability). Use for planning and context only. Do not rely on it as sole evidence of presence or absence.
+    </div>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Satellite data</strong> (Sentinel-2 NDVI, CHIRPS rainfall, Sentinel-1 moisture, ERA5 temperature) is processed into a 10km grid over South Sudan.</li>
+      <li>A <strong>machine learning model</strong> (U-Net + LSTM) learns spatial and temporal patterns from historical data and FAO cattle density.</li>
+      <li><strong>Hourly updates</strong> adjust probabilities using current weather (OpenWeather) and simple rules (e.g. cattle seek shade in midday heat, movement limited to ~50 km/week).</li>
+      <li>The map shows a <strong>probability heatmap</strong> per grid cell, not exact locations.</li>
+    </ul>
+
+    <h2>Update frequency</h2>
+    <p>The map refreshes <strong>every hour</strong>. Satellite imagery is typically updated every 5–7 days when new scenes are available. Between satellite updates, hourly predictions use the latest satellite-derived features plus current weather (rainfall, temperature) to adjust probabilities. The info panel shows when the map was last updated and the next update time.</p>
+
+    <h2>What the probabilities mean</h2>
+    <p>Each cell shows the estimated probability (0–100%) that cattle are present in that area. This is a <strong>probabilistic forecast</strong>, not a guarantee. <strong>Confidence</strong> (low / medium / high) indicates how recent the underlying satellite data is: high = within about 3 days, medium = within about a week, low = older. Always consider confidence when interpreting the map.</p>
+
+    <h2>Data sources</h2>
+    <p>All data used is free and open where possible.</p>
+    <ul>
+      <li><strong>Sentinel-2</strong> (NDVI – vegetation): <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED" target="_blank" rel="noopener">Google Earth Engine</a></li>
+      <li><strong>CHIRPS</strong> (rainfall): <a href="https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_DAILY" target="_blank" rel="noopener">Google Earth Engine</a></li>
+      <li><strong>Sentinel-1</strong> (soil moisture / radar): <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD" target="_blank" rel="noopener">Google Earth Engine</a></li>
+      <li><strong>ERA5</strong> (temperature): <a href="https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_DAILY" target="_blank" rel="noopener">Google Earth Engine</a></li>
+      <li><strong>FAO Gridded Livestock of the World</strong> (cattle density, for model training): <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/GIVQ75" target="_blank" rel="noopener">Harvard Dataverse</a></li>
+      <li><strong>OpenWeather</strong> (current weather for hourly adjustments): <a href="https://openweathermap.org/api" target="_blank" rel="noopener">openweathermap.org</a></li>
+    </ul>
+
+    <h2>Limitations</h2>
+    <p>Predictions can be wrong. Cloud cover may delay satellite updates. The model does not track individual animals. Conflict and access can affect where cattle move in ways the model does not fully capture. Use for planning and context only, not as sole evidence of presence or absence.</p>
+
+    <h2>Contact and feedback</h2>
+    <p>This is an open-source prototype. For methodology questions, bug reports, or suggestions, please open an issue or contribution in the project repository, or contact the deploying organization.</p>
+
+    <p><a href="/">Back to map</a></p>
+  </div>
+</body>
+</html>

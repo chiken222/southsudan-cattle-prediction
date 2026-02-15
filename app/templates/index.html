@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>South Sudan Cattle Movement Forecast</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <div id="info-panel">
+    <h2>South Sudan Cattle Movement Forecast</h2>
+    <p id="last-updated">Last updated: —</p>
+    <p id="next-update">Next update: —</p>
+    <p id="trend">Current trend: —</p>
+    <p id="confidence">Confidence: —</p>
+  </div>
+  <div id="legend">
+    <span class="legend-label">Low</span>
+    <div id="legend-gradient"></div>
+    <span class="legend-label">High</span>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/map.js"></script>
+</body>
+</html>
