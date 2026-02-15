@@ -16,6 +16,18 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from flask import Flask, jsonify, render_template
 
 from config import OUTPUTS_DIR
+import gdown
+from threading import Thread
+
+def download_prediction_file():
+    """Download latest prediction from Google Drive on startup."""
+    try:
+        gdrive_url = "https://drive.google.com/uc?id=1ITBRJpRU4x7v2XvNaBTvyDVoCz1Cc-iJ"
+        PREDICTION_FILE.parent.mkdir(exist_ok=True)
+        gdown.download(gdrive_url, str(PREDICTION_FILE), quiet=False)
+        logger.info("Downloaded prediction file from Google Drive")
+    except Exception as e:
+        logger.error(f"Failed to download prediction file: {e}")
 
 app = Flask(
     __name__,
@@ -28,6 +40,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 PREDICTION_FILE = OUTPUTS_DIR / "latest_prediction.geojson"
+# Download prediction file on startup
+Thread(target=download_prediction_file, daemon=True).start()
 MODEL_VERSION = os.environ.get("MODEL_VERSION", "v1.0")
 
 
