@@ -40,8 +40,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 PREDICTION_FILE = OUTPUTS_DIR / "latest_prediction.geojson"
-# Download prediction file on startup
-Thread(target=download_prediction_file, daemon=True).start()
 MODEL_VERSION = os.environ.get("MODEL_VERSION", "v1.0")
 
 
@@ -116,6 +114,10 @@ def api_health():
 
 
 if __name__ == "__main__":
+    # Download prediction file first
+    download_prediction_file()
+   
     port = int(os.environ.get("PORT", 5000))
     logger.info("Starting server on port %s", port)
     app.run(host="0.0.0.0", port=port, debug=os.environ.get("FLASK_DEBUG", "0") == "1")
+
