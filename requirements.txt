@@ -25,3 +25,5 @@ requests>=2.31.0
 # Optional: for development
 # pytest>=7.0.0
 # black>=23.0.0
+
+gdown>=4.7.1
